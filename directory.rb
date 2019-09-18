@@ -16,8 +16,11 @@ def print_header
 end
 
 def print(students)
+  i = 0
   students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    if (student[:name])[0] == "s"
+      puts "#{i += 1} #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
@@ -34,12 +37,12 @@ def input_students
 
   students = []
 
-  name = gets.chomp
-
+  name = gets.strip
+#strip alternate to chomp
   while !name.empty? do
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
-    name = gets.chomp
+    name = gets.strip
   end
 
   students
