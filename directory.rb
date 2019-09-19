@@ -1,9 +1,14 @@
+
+
+
+@students = []
+
 def print_header
   puts "The Students of Villains Academy"
   puts "-------------------"
 end
 
-def print(students)
+def print
 #   cohort_list = []
 #   students.each do |student|
 #     cohort = student[:cohort].to_s
@@ -21,9 +26,8 @@ def print(students)
 #   end
 # end
   t = 0
-  i = 0
-
-  students.each do |student|
+# i = 0
+  @students.each do |student|
     # while i < students.length
     # if (student[:name])[0] == "s" <- Exercise 2, filter by first letter
     # if (student[:name]).length < 12
@@ -40,13 +44,13 @@ def print(students)
     i += 1
   end
 
-def print_footer(names)
-  if names.count == 0
+def print_footer()
+  if @students.count == 0
     puts "Strange, no students"
     return
   end
-  string = "Overall, we have #{names.count} student"
-  if names.count > 1
+  string = "Overall, we have #{@students.count} student"
+  if @students.count > 1
     ess = "s"
     string += ess
   end
@@ -56,11 +60,8 @@ end
 def input_students
   puts "please enter student name"
   name = gets.strip
-
-  students = []
 #strip alternate to chomp
   while !name.empty? do
-
     puts "please enter cohort"
       cohort = gets.strip
     if cohort.empty?
@@ -76,39 +77,44 @@ def input_students
       height = gets.strip
     puts "To finish press return twice"
 
-    students << {
+    @students << {
       name: name,
       cohort: cohort,
       hobbies: hobby,
       birthPlace: birth,
       height: height
       }
-      string = "Now we have #{students.count} students"
-      if students.count > 1
+      string = "Now we have #{@students.count} students"
+      if @students.count > 1
         ess = "s"
         string += ess
       end
       puts string
       name = gets.strip
     end
-  students
+end
+
+def print_menu
+  puts "1.Input the students"
+  puts "2.Show the students"
+  puts "9.Exit"
+end
+
+def show_students()
+  print_header
+  print
+  print_footer
 end
 
 def interactive_menu
-  students = []
   loop do
-    puts "1. Input the students"
-    puts "2.Show the students"
-    puts "9. Exit"
-
+    print_menu
     selection = gets.chomp
     case selection
     when "1"
       students = input_students
     when "2"
-      print_header
-      print(students)
-      print_footer(students)
+      show_students
     when "9"
       exit
     else
@@ -117,5 +123,4 @@ def interactive_menu
   end
 end
 
-
-students = input_students
+interactive_menu
