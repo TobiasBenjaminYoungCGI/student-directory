@@ -8,7 +8,7 @@ def print_header
   puts "-------------------"
 end
 
-def print
+def print_student_list
 #   cohort_list = []
 #   students.each do |student|
 #     cohort = student[:cohort].to_s
@@ -102,24 +102,26 @@ end
 
 def show_students()
   print_header
-  print
+  print_students_list
   print_footer
 end
 
+def process(selection)
+  case selection
+  when "1"
+    students = input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you mean, ask again"
+  end
+end
 def interactive_menu
   loop do
     print_menu
-    selection = gets.chomp
-    case selection
-    when "1"
-      students = input_students
-    when "2"
-      show_students
-    when "9"
-      exit
-    else
-      puts "I don't know what you mean, ask again"
-    end
+    process(gets.chomp)
   end
 end
 
