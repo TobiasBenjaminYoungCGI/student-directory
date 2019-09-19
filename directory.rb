@@ -1,52 +1,85 @@
-#first put the students into an array
-# students = [
-#  {name: "Henry Lecter", cohort: :november},
-#  {name: "Luke Vader", cohort: :november},
-#  {name: "The Troubled Wicken of the Southwest", cohort: :november},
-#  {name: "Disruptinator", cohort: :november},
-#  {name: "Frederic Kreuger", cohort: :november},
-#  {name: "The Chuckler", cohort: :november},
-#  {name: "Norma Bates", cohort: :november},
-#  {name: "BoJo", cohort: :november},
-#  {name: "The Dust Man", cohort: :november}
-# ]
 def print_header
   puts "The Students of Villains Academy"
   puts "-------------------"
 end
 
 def print(students)
-  i = 0
+  cohort_list = []
   students.each do |student|
-    if (student[:name])[0] == "s"
-      puts "#{i += 1} #{student[:name]} (#{student[:cohort]} cohort)"
+    cohort = student[:cohort].to_s
+    if !(cohort_list.include?(cohort))
+      cohort_list.push(cohort)
+    end
+  end
+  cohort_list.each do |cohort|
+    puts "Students from the #{cohort} cohort:"
+    students.each do |student|
+      if student[:cohort].to_s.include?(cohort)
+        puts student[:name]
+      end
     end
   end
 end
+  # t = 0
+  # i = 0
+  #
+  # students.each do |student|
+  #   # while i < students.length
+  #   # if (student[:name])[0] == "s" <- Exercise 2, filter by first letter
+  #   # if (student[:name]).length < 12
+  #   puts "
+  #   #{i += 1}.
+  #   Student Name: #{student[:name]}
+  #   Cohort:#{student[:cohort]}
+  #   Hobby: #{student[:hobbies]}
+  #   Birth Place: #{student[:birthPlace]}
+  #   Height: #{student[:height]}
+  #   "
+    # puts "#{t += 1} #{(students[i][:name])}"
+    # end
+    # i += 1
+
 
 def print_footer(names)
-  puts "Overall, we have #{names.count}"
+  puts "Overall, we have #{names.count} students"
 end
-
-
-
 
 def input_students
-  puts "please enter student names"
-  puts "To finish hit return twice"
+  puts "please enter student name"
+  name = gets.strip
 
   students = []
-
-  name = gets.strip
 #strip alternate to chomp
   while !name.empty? do
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
-    name = gets.strip
-  end
 
+    puts "please enter cohort"
+      cohort = gets.strip
+    if cohort.empty?
+      puts "Cohort set to default of November"
+      cohort = "November"
+    end
+      cohort.to_sym
+    puts "please enter hobby"
+      hobby = gets.strip
+    puts "please enter birthplace"
+      birth = gets.strip
+    puts "please enter height"
+      height = gets.strip
+    puts "To finish press return twice"
+
+    students << {
+      name: name,
+      cohort: cohort,
+      hobbies: hobby,
+      birthPlace: birth,
+      height: height
+      }
+      puts "Now we have #{students.count} students"
+      name = gets.strip
+    end
   students
 end
+
 
 students = input_students
 print_header
