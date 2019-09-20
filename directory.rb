@@ -4,6 +4,7 @@
 @students = []
 
 def print_header
+  puts ""
   puts "The Students of Villains Academy"
   puts "-------------------"
 end
@@ -98,7 +99,9 @@ def print_menu
   puts "1.Input the students"
   puts "2.Show the students"
   puts "3.Save the list to a file"
+  puts "4.Open existing records from file"
   puts "9.Exit"
+  puts ""
 end
 
 def show_students
@@ -117,9 +120,26 @@ def save_students
       student[:hobbies],
       student[:birthPlace],
       student[:height]]
-    csv_line = student_data.join(", ")
+    csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "File......saved"
+  file.close
+end
+
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort, hobbies, birthPlace, height = line.chomp.split(",")
+    @students << {
+      name: name,
+      cohort: cohort.to_sym,
+      hobbies: hobbies,
+      birthPlace: birthPlace,
+      height: height
+    }
+  end
+  puts "File loaded"
   file.close
 end
 
@@ -131,6 +151,8 @@ def process(selection)
     show_students
   when "3"
     save_students
+  when "4"
+    load_students
   when "9"
     exit
   else
