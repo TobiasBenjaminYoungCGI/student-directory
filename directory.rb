@@ -3,6 +3,18 @@
 
 @students = []
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry #{filename} doesn't exist."
+    exit
+  end
+end
+
 def print_header
   puts ""
   puts "The Students of Villains Academy"
@@ -64,18 +76,18 @@ def input_students
 #strip alternate to chomp
   while !name.empty? do
     puts "please enter cohort"
-      cohort = gets.strip
+      cohort = STDIN.gets.strip
     if cohort.empty?
       puts "Cohort set to default of November"
       cohort = "November"
     end
       cohort.to_sym
     puts "please enter hobby"
-      hobby = gets.strip
+      hobby = STDIN.gets.strip
     puts "please enter birthplace"
-      birth = gets.strip
+      birth = STDIN.gets.strip
     puts "please enter height"
-      height = gets.strip
+      height = STDIN.gets.strip
     puts "To finish press return twice"
 
     @students << {
@@ -91,7 +103,7 @@ def input_students
         string += ess
       end
       puts string
-      name = gets.strip
+      name = STDIN.gets.strip
     end
 end
 
@@ -127,8 +139,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "student.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobbies, birthPlace, height = line.chomp.split(",")
     @students << {
@@ -162,8 +174,9 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
+try_load_students
 interactive_menu
