@@ -10,7 +10,7 @@ end
 
 def print_student_list
 #   cohort_list = []
-#   students.each do |student|
+#   @students.each do |student|
 #     cohort = student[:cohort].to_s
 #     if !(cohort_list.include?(cohort))
 #       cohort_list.push(cohort)
@@ -18,7 +18,7 @@ def print_student_list
 #   end
 #   cohort_list.each do |cohort|
 #     puts "Students from the #{cohort} cohort:"
-#     students.each do |student|
+#     @students.each do |student|
 #       if student[:cohort].to_s.include?(cohort)
 #         puts student[:name]
 #       end
@@ -26,7 +26,7 @@ def print_student_list
 #   end
 # end
   t = 0
-# i = 0
+  i = 0
   @students.each do |student|
     # while i < students.length
     # if (student[:name])[0] == "s" <- Exercise 2, filter by first letter
@@ -97,13 +97,30 @@ end
 def print_menu
   puts "1.Input the students"
   puts "2.Show the students"
+  puts "3.Save the list to a file"
   puts "9.Exit"
 end
 
-def show_students()
+def show_students
   print_header
-  print_students_list
+  print_student_list
   print_footer
+end
+
+def save_students
+  file = File.open("students.csv", "w")
+  # iterate over the array
+  @students.each do |student|
+    student_data = [
+      student[:name],
+      student[:cohort],
+      student[:hobbies],
+      student[:birthPlace],
+      student[:height]]
+    csv_line = student_data.join(", ")
+    file.puts csv_line
+  end
+  file.close
 end
 
 def process(selection)
@@ -112,6 +129,8 @@ def process(selection)
     students = input_students
   when "2"
     show_students
+  when "3"
+    save_students
   when "9"
     exit
   else
